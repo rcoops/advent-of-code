@@ -26,13 +26,12 @@ def run():
     )
     args = parser.parse_args()
 
-    module_suffix_day = f"{args.day:02}"
-    module = f"day_{module_suffix_day}"
-    mod = import_module(f"advent_of_code_2023.{module}.{module}_{args.step}")
+    module = f"day_{args.day:02}"
+    mod = import_module(f"advent_of_code_2023.{module}.step_{args.step}")
     run_command = getattr(mod, "solve")
-    resource_suffix = f"_{args.step}_example.txt" if args.example else ".txt"
+    resource = f"step_{args.step}_example.txt" if args.example else "input.txt"
 
-    print(run_command(f"{module}{resource_suffix}"))
+    print(run_command(f"{module}/{resource}"))
 
 
 # For debug
