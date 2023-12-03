@@ -1,0 +1,33 @@
+[project]
+name = "advent-of-code-2023"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Rick Cooper", email = "rcoops84@hotmail.com"},
+]
+dependencies = []
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "ruff>=0.1.6",
+]
+
+[tool.pdm.scripts]
+lint = "ruff ."
+format = "ruff format ."
+tidy = {composite = ["lint", "format"]}
+solve = {call = "advent_of_code_2023.cli:run()"}
+
+[tool.ruff]
+fix = true
+preview = true
+select = ["E", "E", "E", "F", "I", "N", "W", "RUF"]
+show-source = true
+src = ["src", "tests"]
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"

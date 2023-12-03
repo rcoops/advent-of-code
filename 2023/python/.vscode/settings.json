@@ -1,0 +1,30 @@
+{
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.rulers": [88]
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.gitignore": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/__pycache__": true,
+    "**/.ruff_cache": true,
+    "**/.pdm-build": true,
+    "**/.pdm-python": true,
+    "**/pdm.lock": true
+  },
+  "github.copilot.enable": {
+    "*": false,
+  },
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+  "python.languageServer": "Pylance",
+  "python.analysis.autoFormatStrings": true,
+  "python.analysis.typeCheckingMode": "basic",
+  "ruff.interpreter": ["${workspaceFolder}/.venv/bin/python"],
+  "ruff.lint.run": "onSave"
+}
