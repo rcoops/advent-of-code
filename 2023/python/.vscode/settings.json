@@ -2,7 +2,11 @@
   "[python]": {
     "editor.defaultFormatter": "charliermarsh.ruff",
     "editor.formatOnSave": true,
-    "editor.rulers": [88]
+    "editor.rulers": [88],
+    "editor.codeActionsOnSave": {
+      "source.fixAll": "always",
+      "source.organizeImports": "always"
+    }
   },
   "files.exclude": {
     "**/.git": true,
@@ -21,10 +25,16 @@
   "github.copilot.enable": {
     "*": false,
   },
+  "github.copilot.editor.enableAutoCompletions": false,
   "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
   "python.languageServer": "Pylance",
   "python.analysis.autoFormatStrings": true,
   "python.analysis.typeCheckingMode": "basic",
+  "ruff.enable": true,
+  "ruff.fixAll": true,
+  "ruff.codeAction.fixViolation": {
+    "enable": true
+  },
   "ruff.interpreter": ["${workspaceFolder}/.venv/bin/python"],
   "ruff.lint.run": "onSave"
 }
