@@ -1,11 +1,17 @@
 from argparse import ArgumentParser
 from importlib import import_module
+from pathlib import Path
 
 __USAGE = """Command line script to run the solutions for the Advent of Code 2023.
 
 Usage (pdm): pdm run solve <day> [-s <step>] [-e]
 Usage: python -m advent_of_code_2023.cli <day> [-s <step>] [-e]
 """
+
+
+def _read_resource(resource_file_name: str) -> str:
+    with open(Path(f"resources/{resource_file_name}")) as f:
+        return f.read()
 
 
 def run():
@@ -29,9 +35,10 @@ def run():
     module = f"day_{args.day:02}"
     mod = import_module(f"advent_of_code_2023.{module}.step_{args.step}")
     run_command = getattr(mod, "solve")
-    resource = f"step_{args.step}_example.txt" if args.example else "input.txt"
+    resource_name = f"step_{args.step}_example.txt" if args.example else "input.txt"
 
-    print(run_command(f"{module}/{resource}"))
+    resource_content = _read_resource(f"{module}/{resource_name}")
+    print(run_command(resource_content))
 
 
 # For debug

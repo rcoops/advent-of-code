@@ -1,8 +1,6 @@
 from collections.abc import Generator
 from functools import reduce
 
-from advent_of_code_2023.resources import read_resource
-
 _COLOURS = ("red", "green", "blue")
 _COLOUR_COUNT_BASE = {"red": 0, "green": 0, "blue": 0}
 
@@ -20,7 +18,7 @@ def extract_set_counts(line: str) -> Generator[dict[str, int], None, None]:
     )
 
 
-def reduce_colour_counts(a: dict, b: dict) -> dict[str, int]:
+def reduce_colour_counts(a: dict[str, int], b: dict[str, int]) -> dict[str, int]:
     return {key: max(a[key], b.get(key, 0)) for key in _COLOURS}
 
 
@@ -51,9 +49,7 @@ def calculate_possible_games(input: str) -> int:
     )
 
 
-def solve(resource: str):
-    input = read_resource(resource)
-
+def solve(input: str):
     sum_of_possible_game_ids = calculate_possible_games(input)
 
     return sum_of_possible_game_ids

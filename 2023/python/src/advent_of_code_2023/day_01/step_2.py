@@ -1,7 +1,5 @@
 from collections.abc import Callable
 
-from advent_of_code_2023.resources import read_resource
-
 __DIGIT_NUMBER_MAPPINGS = {
     "1": 1,
     "2": 2,
@@ -92,9 +90,7 @@ def calculate_calibrations(input: str) -> int:
     return sum(calculate_calibration_for_line(line) for line in input.splitlines())
 
 
-def solve(resource: str):
-    input = read_resource(resource)
-
+def solve(input: str):
     return calculate_calibrations(input)
 
 
