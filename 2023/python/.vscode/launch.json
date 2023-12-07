@@ -12,10 +12,9 @@
       "console": "integratedTerminal",
       "justMyCode": true,
       "args": [
-        "2",
+        "3",
         "--step",
-        "2",
-        "--example"
+        "1",
       ]
     }
   ]
