@@ -9,8 +9,8 @@ from advent_of_code_2023.day_01.step_2.solve_slice import (
 
 
 class Method(Enum):
-    INDEX = 1
-    SLICE = 2
+    INDEX = "index"
+    SLICE = "slice"
 
 
 def _calculate_calibration_digits(line: str, method: Method) -> tuple[int, int]:
@@ -27,8 +27,8 @@ def _calculate_calibration_value(line: str, method: Method) -> int:
     return left_digit * 10 + right_digit
 
 
-def solve(input: str):
-    method = Method.SLICE
+def solve(input: str, method_choice: str = "index"):
+    method = Method(method_choice)
 
     total = sum(
         _calculate_calibration_value(line, method) for line in input.splitlines()

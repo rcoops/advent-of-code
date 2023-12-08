@@ -30,15 +30,25 @@ def run():
         action="store_true",
         help="Run against the *example* input rather than the main test.",
     )
+    parser.add_argument(
+        "-m",
+        "--method",
+        help="Which method to use for the solution, if available",
+    )
     args = parser.parse_args()
 
     module = f"day_{args.day:02}"
     mod = import_module(f"advent_of_code_2023.{module}.step_{args.step}")
     run_command = getattr(mod, "solve")
     resource_name = f"step_{args.step}_example.txt" if args.example else "input.txt"
-
     resource_content = _read_resource(f"{module}/{resource_name}")
-    print(run_command(resource_content))
+
+    if args.method is None:
+        result = run_command(resource_content)
+    else:
+        result = run_command(resource_content, args.method)
+
+    print(result)
 
 
 # For debug
