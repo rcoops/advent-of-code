@@ -35,3 +35,6 @@ def solve(input: str):
     sum_of_all_cube_powers = calculate_sum_of_all_cube_powers(input)
 
     return sum_of_all_cube_powers
+
+
+# Solution: 49710

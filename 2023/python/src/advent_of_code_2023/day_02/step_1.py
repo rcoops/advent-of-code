@@ -53,3 +53,6 @@ def solve(input: str):
     sum_of_possible_game_ids = calculate_possible_games(input)
 
     return sum_of_possible_game_ids
+
+
+# Solution 2683
