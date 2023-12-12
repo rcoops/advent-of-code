@@ -13,14 +13,8 @@ _DIGITS = "0123456789"
 
 @dataclass
 class EnginePart:
-    value: int
-    start_index: int
-    end_index: int
-    symbol_search_indexes: tuple[int, ...]
-
-
-def _is_any_index_a_gear(indexes: OptionalInt, input: str) -> bool:
-    return any(input[i] for i in indexes if input[i] == "*")
+    part_number: int
+    gear_indexes: list[int]
 
 
 def _provide_calculate_bounded_index(
@@ -51,7 +45,8 @@ def _provide_get_index_code_pairs(
     return reduce_index_part_code_pairs
 
 
-def _provide_to_engine_part(
+def _provide_to_gear_part_pairs(
+    input: str,
     line_length: int,
     calculate_bounded_index: Callable[[int], OptionalInt],
 ) -> Callable[[tuple[int, str]], EnginePart]:
@@ -64,7 +59,9 @@ def _provide_to_engine_part(
             line_length,
             calculate_bounded_index,
         )
-        return EnginePart(int(value_text), index, end_index, symbol_search_indexes)
+        gear_indexes = [index for index in symbol_search_indexes if input[index] == "*"]
+
+        return EnginePart(int(value_text), gear_indexes)
 
     return to_engine_part
 
@@ -89,6 +86,7 @@ def _get_symbol_search_indexes(
     same_line_after = calculate_bounded_index(part_end_index)
     next_line_begin = calculate_bounded_index(part_start_index + line_length - 1)
     next_line_end = calculate_bounded_index(part_end_index + line_length + 1)
+
     return (
         *_get_safe_range(previous_line_begin, previous_line_end),
         *same_line_before,
@@ -97,31 +95,35 @@ def _get_symbol_search_indexes(
     )
 
 
+def __reduce_parts(
+    gear_index_to_engine_part_value: dict[int, list[int]],
+    next_part: EnginePart,
+) -> dict[int, list[int]]:
+    for gear_index in next_part.gear_indexes:
+        if gear_index in gear_index_to_engine_part_value:
+            gear_index_to_engine_part_value[gear_index].append(next_part.part_number)
+        else:
+            gear_index_to_engine_part_value[gear_index] = [next_part.part_number]
+    return gear_index_to_engine_part_value
+
+
 def solve(input: str) -> int:
     line_length = input.index("\n") + 1
     max_input_index = len(input) - 1
     get_index_code_pairs = _provide_get_index_code_pairs(input)
     calculate_bounded_index = _provide_calculate_bounded_index(max_input_index)
-    to_engine_part = _provide_to_engine_part(line_length, calculate_bounded_index)
+    to_engine_part = _provide_to_gear_part_pairs(
+        input,
+        line_length,
+        calculate_bounded_index,
+    )
 
     index_potential_part_code_pairs = reduce(get_index_code_pairs, enumerate(input), [])
     potential_parts = list(map(to_engine_part, index_potential_part_code_pairs))
+    potential_gears = reduce(__reduce_parts, potential_parts, {})
+    gears = ((g, p[0] * p[1]) for g, p in potential_gears.items() if len(p) == 2)
 
-    parts = (
-        part
-        for part in potential_parts
-        if _is_any_index_a_gear(part.symbol_search_indexes, input)
-    )
-
-    gear_indexes = [i for i, c in enumerate(input) if c == "*"]
-    print(gear_indexes)
-
-    return 0
+    return sum(c for _, c in gears)
 
 
-# Solution 525911
-
-if __name__ == "__main__":
-    with open("../resources/day_03/step_2_example.txt", "r") as f:
-        print(solve(f.read()))
-
+# Solution: 75805607
