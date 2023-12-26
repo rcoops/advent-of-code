@@ -11,9 +11,9 @@
       "console": "integratedTerminal",
       "justMyCode": true,
       "args": [
-        "3",
+        "4",
         "--step",
-        "2",
+        "1",
         "--example"
       ]
     }
