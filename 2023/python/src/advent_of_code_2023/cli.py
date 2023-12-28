@@ -41,7 +41,10 @@ def run():
     mod = import_module(f"advent_of_code_2023.{module}.step_{args.step}")
     run_command = getattr(mod, "solve")
     resource_name = f"step_{args.step}_example.txt" if args.example else "input.txt"
-    resource_content = _read_resource(f"{module}/{resource_name}")
+    try:
+        resource_content = _read_resource(f"{module}/{resource_name}")
+    except Exception:
+        resource_content = _read_resource(f"{module}/example.txt")
 
     if args.method is None:
         result = run_command(resource_content)
